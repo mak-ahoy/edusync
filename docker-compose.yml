@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  etherpad:
+    image: etherpad/etherpad
+    container_name: etherpad
+    ports:
+      - "9001:9001"
+    environment:
+      - TITLE=Etherpad
+      - ADMIN_PASSWORD=adminpassword
+      - API_KEY=yourapikey
+    volumes:
+      - etherpad-data:/opt/etherpad-lite/var
+
+volumes:
+  etherpad-data:

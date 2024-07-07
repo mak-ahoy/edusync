@@ -1,0 +1,23 @@
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    gap: 10px;
+}
+
+.calendar button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.calendar button:hover {
+    background-color: #e0e0e0;
+}
+
+.calendar .today {
+    background-color: #ffcc00;
+    border-color: #ffa500;
+}
