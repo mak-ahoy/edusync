@@ -55,3 +55,6 @@ app.listen(port, async () => {
   console.log(`Server running at http://localhost:${port}`);
   await connectToMongoDB();
 });
+
+
+module.exports = app;
