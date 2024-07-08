@@ -36,53 +36,67 @@
     transform: rotate(360deg);
   }
 }
-
-
-.JoinWaitlist {
-  text-align: center;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.JoinWaitlist-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.JoinWaitlist {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   color: white;
 }
 
-.JoinWaitlist-logo {
-  height: 40vmin;
-  pointer-events: none;
+.JoinWaitlist-header {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.JoinWaitlist-form {
-  margin-top: 20px;
+.JoinWaitlist-header p {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.JoinWaitlist-button {
+  background-color: #ffffff;
+  color: #6a11cb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.JoinWaitlist-button:hover {
+  background-color: #6a11cb;
+  color: #ffffff;
 }
 
 .JoinWaitlist-input {
   padding: 10px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  width: 300px;
-  max-width: 100%;
-}
-
-.JoinWaitlist-button {
-  padding: 10px 20px;
-  background-color: #61dafb;
-  color: white;
+  width: calc(100% - 22px);
+  margin-bottom: 10px;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-.JoinWaitlist-button:hover {
-  background-color: #4fa3d1;
+.JoinWaitlist-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
