@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Confetti from 'react-confetti';
 import './App.css'; // Import your CSS file for styling
+import axios from 'axios'
 
 function JoinWaitlist() {
   const [showEmailField, setShowEmailField] = useState(false);
@@ -16,15 +17,23 @@ function JoinWaitlist() {
     setEmail(event.target.value);
   };
 
-  const handleJoinWaitlist = () => {
-    // Simulate successful registration (replace with actual submission logic)
-    console.log('Email submitted:', email);
-    setRegistered(true);
-    setShowEmailField(false);
-    setShowConfetti(true);
+  const handleJoinWaitlist = async () => {
+    try{
+      // Simulate successful registration (replace with actual submission logic)
+      const response = await axios.post('https://edusync-backend.vercel.app/api/storeEmail', {email:email} )
 
-    // Hide confetti after 5 seconds
-    setTimeout(() => setShowConfetti(false), 5000);
+      console.log('Email submitted:', email);
+      setRegistered(true);
+      setShowEmailField(false);
+      setShowConfetti(true);
+  
+      // Hide confetti after 5 seconds
+      setTimeout(() => setShowConfetti(false), 5000);
+
+    }
+    catch(error){
+      console.log(error)
+    }
   };
 
   return (
