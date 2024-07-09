@@ -3,6 +3,13 @@ import Confetti from 'react-confetti';
 import './App.css'; // Import your CSS file for styling
 import axios from 'axios'
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+const validateEmail = (email) => {
+  return emailRegex.test(email);
+};
+
+
 function JoinWaitlist() {
   const [showEmailField, setShowEmailField] = useState(false);
   const [email, setEmail] = useState('');
@@ -19,10 +26,15 @@ function JoinWaitlist() {
 
   const handleJoinWaitlist = async () => {
     try{
+
+      if(!validateEmail(email)){
+        alert("Please enter a valid email.");
+        return;
+      }
       // Simulate successful registration (replace with actual submission logic)
       const response = await axios.post('https://edusync-backend.vercel.app/api/storeEmail', {email:email} )
 
-      console.log('Email submitted:', email);
+      // console.log('Email submitted:', email);
       setRegistered(true);
       setShowEmailField(false);
       setShowConfetti(true);
