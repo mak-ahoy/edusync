@@ -5,7 +5,9 @@ const cors = require('cors');
 
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://edusync-psi.vercel.app' // Replace with your frontend domain
+}));
 const port = process.env.PORT || 3000;
 
 const uri = process.env.MONGODB_URI; // MongoDB connection string from environment variables
