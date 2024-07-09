@@ -1,8 +1,11 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 require('dotenv').config(); // For loading environment variables
+const cors = require('cors');
+
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 3000;
 
 const uri = process.env.MONGODB_URI; // MongoDB connection string from environment variables
