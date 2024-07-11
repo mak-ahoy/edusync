@@ -1,3 +1,15 @@
+/* App.css */
+
+/* Global styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Styles for App component */
 .App {
   text-align: center;
 }
@@ -36,14 +48,8 @@
     transform: rotate(360deg);
   }
 }
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden; /* Prevent scrolling */
-  font-family: Arial, Helvetica, sans-serif;
-}
 
+/* Styles for JoinWaitlist component */
 .JoinWaitlist {
   display: flex;
   justify-content: center;
@@ -99,4 +105,16 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.JoinWaitlist-pitch {
+  text-align: center;
+  margin-top: 20px;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .JoinWaitlist-header {
+    width: 90%;
+  }
 }
