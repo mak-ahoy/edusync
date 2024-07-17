@@ -7,7 +7,7 @@
   body {
     font-family: 'Open Sans', sans-serif;
     background: #f5f5f5;
-    color: #333;
+    color: #5f5e5e;
     font-size: 14px;
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     max-width: 1100px;
-    margin: 34px auto;
+    margin: 0px auto;
   }
   
   .right > span {
@@ -40,6 +40,7 @@
     display: flex;
     flex-direction: column;
     padding: 70px 0;
+    /* height: 100vh; */
   }
   
   .container > h1 {
@@ -47,6 +48,7 @@
     font-size: 48px;
     line-height: 120%;
     text-align: center;
+    
   }
   
   .container > p {
@@ -133,7 +135,7 @@
     }
   
     .container {
-      padding: 70px 20px;
+      padding: 40px 20px;
     }
   }
   
@@ -144,3 +146,7 @@
     }
   }
   
+
+  .result {
+    color: #f5f5f5;
+  }

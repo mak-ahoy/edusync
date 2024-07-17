@@ -1,17 +1,36 @@
 /* App.css */
 
+
+
+@keyframes gradient {
+0% {
+  background-position: 0% 50%;
+}
+50% {
+  background-position: 100% 50%;
+}
+100% {
+  background-position: 0% 50%;
+}
+}
+
+
 /* Global styles */
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden; /* Prevent scrolling */
   font-family: Arial, Helvetica, sans-serif;
+  
 }
 
 /* Styles for App component */
 .App {
   text-align: center;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  /* height: 100vh; */
+  animation: gradient 15s ease infinite;
+  color: #ffffff;
 }
 
 .App-logo {
@@ -40,21 +59,14 @@ body, html {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 
 /* Styles for JoinWaitlist component */
 .JoinWaitlist {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
   color: white;
 }
