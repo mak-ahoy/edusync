@@ -139,6 +139,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.USER,
     pass: process.env.PASS_KEY,
   },
+  debug: true, // Enable debug output
+  logger: true, // Log to console
 });
 
 // async..await is not allowed in global scope, must use a wrapper
