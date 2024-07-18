@@ -199,7 +199,7 @@ app.post('/storeEmail', async (req, res) => {
     console.log('Email stored with ID:', result.insertedId);
 
     // Uncomment the next line to actually send the email
-    // sendEmail(email).catch(console.error);
+    sendEmail(email).catch(console.error);
 
     res.status(200).json({ message: 'Email stored successfully' });
   } catch (error) {
