@@ -206,10 +206,16 @@ app.post('/storeEmail', async (req, res) => {
 
     // Connect to MongoDB
     const db = client.db(process.env.DB_NAME);
-    
+    console.log(email+" this is email posted 1")
+
     const emailsCollection = db.collection('waitlist_emails');
+    console.log(email+" this is email posted 2")
+
 
     const email_check = emailRegex.test(email)
+
+    console.log(email+" this is email posted 3")
+
 
     if (!email_check){
       return res.status(400).json({
@@ -218,6 +224,8 @@ app.post('/storeEmail', async (req, res) => {
 
     }
     const email_exists = await emailsCollection.findOne({email})
+
+    console.log(email+" this is email posted 4")
 
 
 
@@ -232,7 +240,7 @@ app.post('/storeEmail', async (req, res) => {
     console.log('Email stored with ID:', result.insertedId);
 
 
-    sendEmail(email).catch(console.error);
+    // sendEmail(email).catch(console.error);
 
     console.log("After send email ")
 
