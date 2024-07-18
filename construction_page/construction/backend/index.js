@@ -119,20 +119,17 @@ const template = `
 </body>
 </html>
 `
-
 const app = express();
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGODB_URI; // MongoDB connection string from environment variables
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-
 // Middleware
 app.use(cors({
-  origin: ['https://edusync-psi.vercel.app' , 'http://localhost:3000'] // Replace with your frontend domain
+  origin: ['https://edusync-psi.vercel.app', 'http://localhost:3000'] // Replace with your frontend domain
 }));
 app.use(express.json());
-
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -144,28 +141,21 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 // async..await is not allowed in global scope, must use a wrapper
 async function sendEmail(email) {
-
-  console.log("In send email ")
-
-  // send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: '"EduSync 👻" <mail.edusync@gmail.com>', // sender address
-    to: email, // list of receivers
-    subject: "Welcome 👋", // Subject line
-    text: "Hello world?", // plain text body
-    html: template, // html body
-  });
-  console.log("In send email post transporter")
-  
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+  try {
+    const info = await transporter.sendMail({
+      from: '"EduSync 👻" <mail.edusync@gmail.com>', // sender address
+      to: email, // list of receivers
+      subject: "Welcome 👋", // Subject line
+      text: "Hello world?", // plain text body
+      html: template, // html body
+    });
+    console.log("Message sent: %s", info.messageId);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
 }
-
-
-
 
 // Function to connect to MongoDB
 async function connectToMongoDB() {
@@ -177,24 +167,14 @@ async function connectToMongoDB() {
   }
 }
 
-
 // API endpoint to say welcome
-app.get('/', async (req, res) => {
-  try {
-    res.status(200).json({ message: 'Welcome!' });
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome!' });
 });
 
 // API endpoint to say hello
-app.get('/hello', async (req, res) => {
-  try {
-    res.status(200).json({ message: 'Hello, World!' });
-
-  } catch (error) {
-    console.log(error);
-  }
+app.get('/hello', (req, res) => {
+  res.status(200).json({ message: 'Hello, World!' });
 });
 
 // API endpoint to store email
@@ -202,82 +182,41 @@ app.post('/storeEmail', async (req, res) => {
   try {
     const { email } = req.body;
 
-    console.log(email+" this is email posted")
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Please enter a valid email." });
+    }
 
-    // Connect to MongoDB
     const db = client.db(process.env.DB_NAME);
-    console.log(email+" this is email posted 1")
-
     const emailsCollection = db.collection('waitlist_emails');
-    console.log(email+" this is email posted 2")
 
+    const emailExists = await emailsCollection.findOne({ email });
 
-    const email_check = emailRegex.test(email)
-
-    console.log(email+" this is email posted 3")
-
-
-    if (!email_check){
-      return res.status(400).json({
-        message: "Please enter a valid email."
-      })
-
-    }
-    const email_exists = await emailsCollection.findOne({email})
-
-    console.log(email+" this is email posted 4")
-
-
-
-    if (email_exists){
-      return res.status(400).json({
-        message: "Email already registered!"
-      })
+    if (emailExists) {
+      return res.status(400).json({ message: "Email already registered!" });
     }
 
-    // Store email in MongoDB
     const result = await emailsCollection.insertOne({ email });
     console.log('Email stored with ID:', result.insertedId);
 
-
+    // Uncomment the next line to actually send the email
     // sendEmail(email).catch(console.error);
 
-    console.log("After send email ")
-
-
-      res.status(200).json({ message: 'Email stored successfully' });
-    } catch (error) {
-      console.error('Error storing email:', error);
-      res.status(500).json({ error: 'Failed to store email' });
-    }
+    res.status(200).json({ message: 'Email stored successfully' });
+  } catch (error) {
+    console.error('Error storing email:', error);
+    res.status(500).json({ error: 'Failed to store email' });
+  }
 });
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  connectToMongoDB().catch(console.error); // Connect to MongoDB when the server starts
 });
 
-// Connect to MongoDB when the server starts
-connectToMongoDB();
-
-
-// // index.js
-
-// const express = require('express');
-// const app = express();
-// const port = process.env.PORT || 3000;
-
-// // Define your routes
-// app.get('/', (req, res) => {
-//   res.send('Hello from your Node.js backend!');
-// });
-
-// app.get('/api/data', (req, res) => {
-//   const data = { message: 'This is your API data!' };
-//   res.json(data);
-// });
-
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+// Properly close the MongoDB connection when the process exits
+process.on('SIGINT', async () => {
+  await client.close();
+  console.log('MongoDB connection closed');
+  process.exit(0);
+});
