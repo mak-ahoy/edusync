@@ -39,6 +39,9 @@ const EarningCard = ({ isLoading }) => {
             color: '#fff',
             overflow: 'hidden',
             position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%', // Ensure MainCard takes up full height of its parent
             '&:after': {
               content: '""',
               position: 'absolute',
@@ -62,8 +65,8 @@ const EarningCard = ({ isLoading }) => {
             },
           }}
         >
-          <Box sx={{ p: 2.25 }}>
-            <Grid container direction="column" >
+          <Box sx={{ p: 2.25, width: '100vw', height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Grid container direction="column" sx={{ flex: 1 }}>
               <Grid item>
                 <Grid container justifyContent="space-between">
                   <Grid item>
@@ -123,7 +126,7 @@ const EarningCard = ({ isLoading }) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item>
+              <Grid item sx={{ flex: 1 }}>
                 <Grid container alignItems="center">
                   <Grid item>
                     <Typography
